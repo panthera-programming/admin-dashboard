@@ -5,11 +5,13 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import java.util.Set;
+
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
 @Entity
-@Table
+@Table(name = "clients_table")
 public class ClientEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -32,5 +34,5 @@ public class ClientEntity {
             },
             inverseJoinColumns = @JoinColumn(name = "product_id", referencedColumnName = "product_id")
     )
-    private ProductEntity product;
+    private Set<ProductEntity> product;
 }

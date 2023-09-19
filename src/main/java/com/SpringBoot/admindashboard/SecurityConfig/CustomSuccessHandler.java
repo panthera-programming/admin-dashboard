@@ -35,7 +35,7 @@ public class CustomSuccessHandler implements AuthenticationSuccessHandler {
                 this.adminSuccessHandler.onAuthenticationSuccess(request, response, authentication);
                 return;
             }
-            else this.staffSuccessHandler.onAuthenticationSuccess(request, response, authentication);
+            this.staffSuccessHandler.onAuthenticationSuccess(request, response, authentication);
         }
     }
 }

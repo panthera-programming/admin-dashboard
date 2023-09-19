@@ -14,7 +14,7 @@ import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
 
 @Configuration
 @EnableWebSecurity
-public class MainConfig {
+public class MainConfig{
     @Autowired
     private UserDetailsServiceImpl userDetails;
     @Autowired
@@ -32,18 +32,18 @@ public class MainConfig {
     @Bean
     public SecurityFilterChain filterChain(HttpSecurity http) throws Exception
     {
-        http.
-                authorizeHttpRequests(authorize -> authorize
+        http
+                .authorizeHttpRequests(authorize -> authorize
                         .requestMatchers("/").permitAll()
-                        .requestMatchers("/login").permitAll()
-                        .requestMatchers("/admin/**").hasRole("Admin")
-                        .requestMatchers("/home").hasAnyRole("Admin", "Staff")
+                        .requestMatchers("/js/**","/imgs/**","/register/firstAdmin","/setPassword").permitAll()
+                        .requestMatchers("/adminHome/**").hasAuthority("Admin")
                         .anyRequest().authenticated()
                 )
                 .formLogin(
                         form -> form
                                 .loginPage("/login")
                                 .loginProcessingUrl("/login")
+                                //.defaultSuccessUrl("/adminHome")
                                 .successHandler(loginSuccessHandler)
                                 .permitAll()
                 )

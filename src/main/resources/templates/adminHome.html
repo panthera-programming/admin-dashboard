@@ -3,7 +3,7 @@
     <head>
         <title>Admin</title>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
-        <link th:href="@{}" rel="stylesheet">
+        <!--<link th:href="@{}" rel="stylesheet">-->
         <link
                 rel="stylesheet"
                 href="https://cdn.jsdelivr.net/npm/bootstrap@4.1.3/dist/css/bootstrap.min.css"
@@ -28,7 +28,7 @@
                 <div class="d-flex align-items-center">
                     <div class="col-4 d-flex justify-content-center">
                         <article style="border-radius: 20px;">
-                            <img src="../static/imgs/brand-logo.png" width="400px" style="border-radius: 10% / 50%;">
+                            <img src="/imgs/brand-logo.png" width="400px" style="border-radius: 10% / 50%;">
                         </article>
                     </div>
                     <div
@@ -36,10 +36,10 @@
                             style="background-color: rgb(188, 32, 48, 0.85);margin-left: 3rem;height: 4rem;margin-bottom: 2rem;"
                     >
                         <article>
-                            <a href="#staff-form" style="font-size: 16px;color: rgb(223, 220, 219);">Create Staff</a>
+                            <a id="create-staff-link" href="#create-staff-form" style="font-size: 16px;color: rgb(223, 220, 219);">Create Staff</a>
                         </article>
                         <article>
-                            <a th:href="" style="font-size: 16px;color: rgb(223, 220, 219);">Products</a>
+                            <a style="font-size: 16px;color: rgb(223, 220, 219);">Products</a>
                             <ul style="display: none;">
                                 <li>
                                     <a>Add product</a>
@@ -70,6 +70,8 @@
                         <h4 class="text-center col-5 mx-auto" style="margin-bottom: 4rem;">Available Products</h4>
                         <span style="position: absolute;top: 20%;right: 15%;">
                             <a
+                                    id="create-product-link"
+                                    href="#create-product-form"
                                     class="btn"
                                     style="background-color: rgba(68, 40, 12, 0.95);color: rgba(255, 255, 255, 0.6);font-size: 15px;"
                             >
@@ -120,15 +122,15 @@
                         <h4 id="product-name" class="text-center" style="margin-bottom: 4rem;">Product Name</h4>
                         <div class="col-3 d-flex justify-content-between" style="position: absolute;top: 20%;right: 15%;">
                             <span  style="color: rgb(223, 220, 219);">
-                                <a class="d-block btn" style="background-color: rgba(16, 12, 12, 0.45);font-size: 15px;">Bulk Mail</a>
+                                <a id="bulk-mail-link" href="#bulk-mail-form" class="d-block btn" style="background-color: rgba(16, 12, 12, 0.45);font-size: 15px;">Bulk Mail</a>
                             </span>
                             <span class="d-block" style="color: rgb(223, 220, 219);">
-                                <a class="btn"  style="background-color: rgba(16, 12, 12, 0.45);font-size: 15px;">Bulk SMS</a>
+                                <a id="bulk-sms-link" href="#bulk-sms-form" class="btn"  style="background-color: rgba(16, 12, 12, 0.45);font-size: 15px;">Bulk SMS</a>
                             </span>
                         </div>
                         <div style="position: absolute;top: 20%;left: 15%;">
                             <span>
-                                <a class="material-symbols-rounded" style="font-size: 40px;color: rgb(78, 76, 74);">person_add</a>
+                                <a id="create-client-link" href="#create-client-form" class="material-symbols-rounded" style="font-size: 40px;color: rgb(78, 76, 74);">person_add</a>
                             </span>
                         </div>
                         <div class="d-flex justify-content-center flex-column mx-auto">
@@ -188,7 +190,7 @@
             <section>
                 <div class="col-8 mx-auto">
                     <!-- create staff form -->
-                    <div class="col-8 mx-auto" style="background-color: rgba(16, 12, 12, 0.45);height: 45vh;padding: 1rem;border-radius: 5px;">
+                    <div id="create-staff-form" class="d-none col-8 mx-auto" style="background-color: rgba(16, 12, 12, 0.45);height: 45vh;padding: 1rem;border-radius: 5px;">
                         <h4 style="font-size: 20px;color: rgb(68, 40, 12);">Register New Staff Member</h4>
                         <form>
                             <span class="d-block d-flex justify-content-center" style="margin-top: 2rem;margin-bottom: 1rem;color: rgb(68, 40, 12);">
@@ -206,13 +208,14 @@
                                     <option value="Staff">Staff</option>
                                 </select>
                             </span>
-                            <div class="col-3" style="padding: 0.5rem;">
+                            <div class="col-11 d-flex justify-content-between mx-auto" style="padding: 0.5rem;">
                                 <input type="submit" value="Register" style="padding: 0.5rem;color: rgb(68, 40, 12);"/>
+                                <span id="cancel-staff" class="btn d-block" style="width: 80px;background-color: rgba(188, 32, 48, 0.9);color: rgb(223, 220, 219);">Close</span>
                             </div>
                         </form>
                     </div>
                     <!-- create product form -->
-                    <div class="d-none col-8 mx-auto" style="background-color: rgba(16, 12, 12, 0.45);height: 45vh;padding: 1rem;border-radius: 5px;">
+                    <div id="create-product-form" class="d-none col-8 mx-auto" style="background-color: rgba(16, 12, 12, 0.45);height: 45vh;padding: 1rem;border-radius: 5px;">
                         <h4 style="font-size: 20px;color: rgb(68, 40, 12);">Create New Product</h4>
                         <form>
                             <span class="d-block d-flex justify-content-center" style="margin-top: 2rem;margin-bottom: 1rem;color: rgb(68, 40, 12);">
@@ -223,13 +226,14 @@
                                 <label class="col-3 text-start">Product Value</label>
                                 <input id="new-product-value" type="text" style="text-align: center;"/>
                             </span>
-                            <div class="col-3" style="padding: 0.5rem;">
+                            <div class="col-11 d-flex justify-content-between mx-auto" style="padding: 0.5rem;">
                                 <input type="submit" value="Save Product" style="padding: 0.5rem;color: rgb(68, 40, 12);"/>
+                                <span id="cancel-product" class="btn d-block" style="width: 80px;background-color: rgba(188, 32, 48, 0.9);color: rgb(223, 220, 219);">Close</span>
                             </div>
                         </form>
                     </div>
                     <!-- create client form -->
-                    <div class="d-none col-8 mx-auto" style="background-color: rgba(16, 12, 12, 0.45);height: 45vh;padding: 1rem;border-radius: 5px;">
+                    <div id="create-client-form" class="d-none col-8 mx-auto" style="background-color: rgba(16, 12, 12, 0.45);height: 45vh;padding: 1rem;border-radius: 5px;">
                         <h4 style="font-size: 20px;">Register  New Client</h4>
                         <form>
                             <span class="d-block d-flex justify-content-center" style="margin-top: 2rem;margin-bottom: 1rem;color: rgb(68, 40, 12);">
@@ -244,13 +248,43 @@
                                 <label class="col-3 text-start">Enter Phone</label>
                                 <input id="client-phone" type="tel" style="text-align: center;"/>
                             </span>
-                            <div class="col-3" style="padding: 0.5rem;">
+                            <div class="col-11 d-flex justify-content-between mx-auto" style="padding: 0.5rem;">
                                 <input type="submit" value="Register" style="padding: 0.5rem;color: rgb(68, 40, 12);"/>
+                                <span id="cancel-client" class="btn d-block" style="width: 80px;background-color: rgba(188, 32, 48, 0.9);color: rgb(223, 220, 219);">Close</span>
                             </div>
                         </form>
                     </div>
+                    <!--bulk mail-->
+                    <div
+                            id="bulk-mail-form"
+                            class="d-none col-8 mx-auto flex-column align-items-center"
+                            style="background-color: rgba(16, 12, 12, 0.45);height: 40vh;padding-top: 1rem;border-radius: 5px;">
+                        <h4 class="text-start" style="width: 250px;font-size: 20px;">Mail All clients</h4>
+                        <div class="" style="margin-top: 0.5rem;height: 60%;">
+                            <textarea autofocus placeholder="Enter message here" style="width: 300px;height: 100%;resize: none;"></textarea>
+                        </div>
+                        <div class="col-11 d-flex justify-content-between mx-auto" style="margin-top: 0.5rem;">
+                            <input type="submit" value="Send" style="width: 80px;margin: 0.5rem;">
+                            <span id="cancel-mail" class="btn d-block" style="width: 80px;background-color: rgba(188, 32, 48, 0.9);color: rgb(223, 220, 219);">close</span>
+                        </div>
+                    </div>
+                    <!--bulk sms-->
+                    <div
+                            id="bulk-sms-form"
+                            class="d-none col-8 mx-auto flex-column align-items-center"
+                            style="background-color: rgba(16, 12, 12, 0.45);height: 40vh;padding-top: 1rem;border-radius: 5px;">
+                        <h4 class="text-start" style="width: 250px;font-size: 20px;">SMS All clients</h4>
+                        <div class="" style="margin-top: 0.5rem;height: 60%;">
+                            <textarea autofocus placeholder="Enter message here" style="width: 300px;height: 100%;resize: none;"></textarea>
+                        </div>
+                        <div class="col-11 d-flex justify-content-between mx-auto" style="margin-top: 0.5rem;">
+                            <input type="submit" value="Send" style="width: 80px;margin: 0.5rem;">
+                            <span id="cancel-sms" class="btn d-block" style="width: 80px;background-color: rgba(188, 32, 48, 0.9);color: rgb(223, 220, 219);">Close</span>
+                        </div>
+                    </div>
                 </div>
             </section>
+            <script src="/js/adminHome.js"></script>
         </main>
         <footer>
             <div
@@ -260,7 +294,7 @@
                 <div class="d-flex justify-content-between align-items-center">
                     <div class="d-flex col-12" style="margin-top: 10%;margin-left: 40%;">
                         <span style="margin-right: 1rem;">
-                            <img src="../static/imgs/logo-icon.png" width="80px" height="80px" style="border-radius: 50%;"/>
+                            <img src="/imgs/logo-icon.png" width="80px" height="80px" style="border-radius: 50%;"/>
                         </span>
                         <span style="font-size: 20px;color: rgba(223, 220, 219, 0.8);">
                             Meladen<br><span style="font-size: 16px;">Properties</span>

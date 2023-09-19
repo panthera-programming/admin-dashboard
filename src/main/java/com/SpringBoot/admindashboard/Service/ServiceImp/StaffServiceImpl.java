@@ -26,9 +26,9 @@ public class StaffServiceImpl implements StaffService {
     private JavaMailSender mailSender;
     @Autowired
     private TemplateEngine templateEngine;
-    @Value("spring.mail.username")
+    @Value("${spring.mail.username}")
     private String from;
-    @Value("email_host")
+    @Value("${email.host}")
     private String mailHost;
     @Override
     public StaffEntity getStaffByEmail(String email)
@@ -55,11 +55,14 @@ public class StaffServiceImpl implements StaffService {
             MimeMessageHelper helper = new MimeMessageHelper(mimeMessage);
             helper.setFrom(from);
             helper.setTo(staff.getEmail());
+            helper.setSubject("Set Password");
             helper.setPriority(1);
 
            Context ctx = new Context();
-           String link = mailHost + "/setPassword?id=" + staff.getId();
-           ctx.setVariables(Map.of("passwordLink",link, "staffname", staff.getName()));
+           String urlLink = String.format("%s/setPassword?id=%d", mailHost, staff.getId());
+           System.out.printf("\n\n**********\t%s\t**********\n\n", urlLink);
+           //String link = mailHost + "/setPassword?id=" + staff.getId();
+           ctx.setVariables(Map.of("passwordLink",urlLink, "staffname", staff.getName()));
            String mailText = templateEngine.process("staffMailTemplate.html", ctx);
            helper.setText(mailText, true);
            mailSender.send(mimeMessage);
@@ -72,6 +75,7 @@ public class StaffServiceImpl implements StaffService {
     @Override
     public void saveStaffPassword(StaffEntity staff)
     {
+        System.out.printf("\n\n##########\t%s\t##########\n\n", staff.getPassword());
         String password = passwordEncoder.encode(staff.getPassword());
         staff.setPassword(password);
         staffRepository.save(staff);

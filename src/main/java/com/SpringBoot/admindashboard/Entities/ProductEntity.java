@@ -5,11 +5,13 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import java.util.Set;
+
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
 @Entity
-@Table
+@Table(name = "products_table")
 public class ProductEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -20,5 +22,5 @@ public class ProductEntity {
     @Column(name = "product_value")
     private Long value;
     @ManyToMany(mappedBy = "product")
-    private ClientEntity client;
+    private Set<ClientEntity> client;
 }

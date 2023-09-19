@@ -9,7 +9,7 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @NoArgsConstructor
 @Entity
-@Table
+@Table(name = "staff_table")
 public class StaffEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -20,8 +20,6 @@ public class StaffEntity {
     @Column(name = "staff_email", unique = true, nullable = false, length = 100)
     private String email;
     private String password;
-    /*@Transient
-    private String confirmPassword;*/
     @Column(name = "staff_role", nullable = false)
     private String role;
 }
