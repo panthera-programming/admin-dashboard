@@ -2,7 +2,7 @@
 var createStaffForm = document.getElementById("create-staff-form")
 var createProductForm = document.getElementById("create-product-form")
 var createClientForm = document.getElementById("create-client-form")
-function staffCreation(container)
+/*function staffCreation(container)
 {
     document.getElementById("create-staff-link").addEventListener("click", () => {
         container.classList.replace("d-none", "d-block")
@@ -10,51 +10,41 @@ function staffCreation(container)
     document.getElementById("cancel-staff").addEventListener("click", () => {
         document.getElementById("create-staff-form").classList.replace("d-block", "d-none")
     })
-}
+}*/
 
-function productCreation(container)
+function handleDropDowns()
 {
-    document.getElementById("create-product-link").addEventListener("click", () => {
-        container.classList.replace("d-none", "d-block")
+    document.getElementById("toggleDrop1").addEventListener("click", () => {
+        document.querySelector(".drop-down-prod").classList.toggle("d-none")
     })
-    document.getElementById("cancel-product").addEventListener("click", () => {
-        document.getElementById("create-product-form").classList.replace("d-block", "d-none")
+    document.getElementById("toggleDrop2").addEventListener("click", () => {
+        document.querySelector(".drop-down-client").classList.toggle("d-none")
     })
 }
-function clientCreation(container)
+function generalOperations(linkBtn, container, cancelBtn)
 {
-    document.getElementById("create-client-link").addEventListener("click", () => {
-        container.classList.replace("d-none", "d-block")
+    //msg ="Mail " + document.getElementById("client-mail").textContent
+    document.getElementById(linkBtn).addEventListener("click", () => {
+        document.getElementById(container).classList.replace("d-none", "d-block")
+        //document.getElementById("bulk-mail-form").children[0].innerText = msg
     })
-    document.getElementById("cancel-client").addEventListener("click", () => {
-        document.getElementById("create-client-form").classList.replace("d-block", "d-none")
-    })
-}
-function bulkSms()
-{
-    document.getElementById("bulk-sms-link").addEventListener("click", () => {
-        document.getElementById("bulk-sms-form").classList.replace("d-none", "d-block")
-    })
-    document.getElementById("cancel-sms").addEventListener("click", () => {
-        document.getElementById("bulk-sms-form").classList.replace("d-block", "d-none")
-    })
-}
-function bulkEmail()
-{
-    document.getElementById("bulk-mail-link").addEventListener("click", () => {
-        document.getElementById("bulk-mail-form").classList.replace("d-none", "d-block")
-    })
-    document.getElementById("cancel-mail").addEventListener("click", () => {
-        document.getElementById("bulk-mail-form").classList.replace("d-block", "d-none")
+    document.getElementById(cancelBtn).addEventListener("click", () => {
+        document.getElementById(container).classList.replace("d-block", "d-none")
     })
 }
 
 document.addEventListener("DOMContentLoaded", function() {
-    // Your code here
-    staffCreation(createStaffForm)
-    productCreation(createProductForm)
+    //staffCreation(createStaffForm)
+    /*productCreation(createProductForm)
     clientCreation(createClientForm)
-    bulkEmail();
-    bulkSms();
+    bulkEmail()
+    bulkSms()*/
+    handleDropDowns()
+    generalOperations("bulk-sms-link","bulk-sms-form","cancel-sms")
+    generalOperations("bulk-mail-link","bulk-mail-form","cancel-mail")
+    generalOperations("create-product-link","create-product-form","cancel-product")
+    generalOperations("create-client-link","create-client-form","cancel-client")
+    generalOperations("client-mail","bulk-mail-form","cancel-mail")
+    generalOperations("client-phone","bulk-sms-form","cancel-sms")
 });
 

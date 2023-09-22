@@ -15,7 +15,7 @@ import java.util.Collection;
 @Component
 public class CustomSuccessHandler implements AuthenticationSuccessHandler {
     SimpleUrlAuthenticationSuccessHandler staffSuccessHandler =
-            new SimpleUrlAuthenticationSuccessHandler("/home");
+            new SimpleUrlAuthenticationSuccessHandler("/home?staff=true");
     SimpleUrlAuthenticationSuccessHandler adminSuccessHandler =
             new SimpleUrlAuthenticationSuccessHandler("/admin");
 

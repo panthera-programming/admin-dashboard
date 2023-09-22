@@ -10,6 +10,10 @@
                 integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO"
                 crossorigin="anonymous"
         >
+        <link 
+                rel="stylesheet" 
+                href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.1/font/bootstrap-icons.css"
+        >
         <link
                 rel="stylesheet"
                 href="https://fonts.googleapis.com/css2?family=Material+Symbols+Rounded:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200"
@@ -24,6 +28,15 @@
     <body style="position: relative;padding: 0;">
         <header></header>
         <main>
+            <div>
+                <div class="d-flex justify-content-end align-items-center" style="margin-top: 2rem;">
+                    <div class="" style="padding-left: 2rem;margin-right: 5rem;">
+                        <a th:href="@{/logout}" style="font-size: 30px;">
+                            <i class="bi bi-box-arrow-right" style="color: rgba(68, 40, 12, 0.95);"></i>
+                        </a>
+                    </div>
+                </div>
+            </div>
             <section style="margin-top: 2rem;">
                 <div class="d-flex align-items-center">
                     <div class="col-4 d-flex justify-content-center">
@@ -35,12 +48,22 @@
                             class="col-7 d-flex justify-content-between align-items-center border"
                             style="background-color: rgb(188, 32, 48, 0.85);margin-left: 3rem;height: 4rem;margin-bottom: 2rem;"
                     >
-                        <article>
+                        <article th:if="${param.admin}">
                             <a id="create-staff-link" href="#create-staff-form" style="font-size: 16px;color: rgb(223, 220, 219);">Create Staff</a>
                         </article>
-                        <article>
-                            <a style="font-size: 16px;color: rgb(223, 220, 219);">Products</a>
-                            <ul style="display: none;">
+                        <article 
+                            th:if="${param.staff}" 
+                            class="d-flex justify-content-center align-items-center"
+                            style="width: 85px;height: 85px;border-radius: 50%;background-color: rgb(223, 220, 219);"
+                        >
+                            <img src="/imgs/real-estate-logo.jpg" width="80px;" height="80px;" style="border-radius: 50%;"/>
+                        </article>
+                        <article style="position: relative;">
+                            <a id="toggleDrop1" style="font-size: 16px;color: rgb(223, 220, 219);">Products</a>
+                            <ul
+                                class="d-none drop-down-prod" 
+                                style="position: absolute;margin-left: -5rem;padding: 0.5rem;top: 2rem;border: 1px solid rgb(78, 76, 74);border-radius: 6px;list-style-type: none;"
+                            >
                                 <li>
                                     <a>Add product</a>
                                 </li>
@@ -49,9 +72,12 @@
                                 </li>
                             </ul>
                         </article>
-                        <article>
-                            <a style="font-size: 16px;color: rgb(223, 220, 219);">Clients</a>
-                            <ul style="display: none;">
+                        <article style="position: relative;">
+                            <a id="toggleDrop2" style="font-size: 16px;color: rgb(223, 220, 219);">Clients</a>
+                            <ul
+                                class="drop-down-client"
+                                style="position: absolute;margin-left: -5rem;padding: 0.5rem;top: 2rem;border: 1px solid rgb(78, 76, 74);border-radius: 6px;list-style-type: none;"
+                            >
                                 <!-- load a list of products and place in tags -->
                                 <li>
                                     <a>Product X</a>
@@ -150,8 +176,8 @@
                                     <tr>
                                         <td>1</td>
                                         <td>Client Name</td>
-                                        <td>clientname@gmail.com</td>
-                                        <td>0798765432</td>
+                                        <td id="client-mail">clientname@gmail.com</td>
+                                        <td id="client-phone">0798765432</td>
                                         <td>
                                             <span
                                                     class="d-flex justify-content-center align-items-center"
@@ -192,24 +218,32 @@
                     <!-- create staff form -->
                     <div id="create-staff-form" class="d-none col-8 mx-auto" style="background-color: rgba(16, 12, 12, 0.45);height: 45vh;padding: 1rem;border-radius: 5px;">
                         <h4 style="font-size: 20px;color: rgb(68, 40, 12);">Register New Staff Member</h4>
-                        <form>
+                        <form th:method="POST">
                             <span class="d-block d-flex justify-content-center" style="margin-top: 2rem;margin-bottom: 1rem;color: rgb(68, 40, 12);">
                                 <label class="col-3 text-start">Enter Name</label>
-                                <input id="staff-name" placeholder="staff name" type="text" style="text-align: center;"/>
+                                <input id="name" name="name" placeholder="staff name" type="text" style="text-align: center;"/>
                             </span>
                             <span class="d-block d-flex justify-content-center" style="margin-top: 1rem;margin-bottom: 1rem;color: rgb(68, 40, 12);">
                                 <label class="col-3 text-start">Enter Email</label>
-                                <input id="staff-email" placeholder="name@example.com" type="text" style="text-align: center;"/>
+                                <input id="email" name="email" placeholder="name@example.com" type="text" style="text-align: center;"/>
                             </span>
                             <span class="d-block d-flex justify-content-center" style="margin-top: 1rem;margin-bottom: 1rem;color: rgb(68, 40, 12);">
                                 <label class="col-3 text-start" style="transform: translateX(-25%);">Select Role</label>
-                                <select class="col-3" id="staff-role" style="transform: translateX(-25%);text-align: center;color: rgb(68, 40, 12);" >
+                                <select class="col-3" id="role" name="role" style="transform: translateX(-25%);text-align: center;color: rgb(68, 40, 12);" >
                                     <option value="Admin">Admin</option>
                                     <option value="Staff">Staff</option>
                                 </select>
                             </span>
                             <div class="col-11 d-flex justify-content-between mx-auto" style="padding: 0.5rem;">
                                 <input type="submit" value="Register" style="padding: 0.5rem;color: rgb(68, 40, 12);"/>
+                                <span id="staff-response-success" class="d-none flex-column justify-content-center align-items-center" style="color: rgb(37, 249, 118);">
+                                    <i class="bi bi-check-circle-fill"></i>
+                                    <span>Operation Successful!</span>
+                                </span>
+                                <span id="staff-response-failure" class="d-none flex-column justify-content-center align-items-center" style="color: rgb(249, 11, 6);">
+                                    <i class="bi bi-exclamation-triangle-fill"></i>
+                                    <span>Operation Failed!</span>
+                                </span>
                                 <span id="cancel-staff" class="btn d-block" style="width: 80px;background-color: rgba(188, 32, 48, 0.9);color: rgb(223, 220, 219);">Close</span>
                             </div>
                         </form>
@@ -217,17 +251,25 @@
                     <!-- create product form -->
                     <div id="create-product-form" class="d-none col-8 mx-auto" style="background-color: rgba(16, 12, 12, 0.45);height: 45vh;padding: 1rem;border-radius: 5px;">
                         <h4 style="font-size: 20px;color: rgb(68, 40, 12);">Create New Product</h4>
-                        <form>
+                        <form th:method="POST">
                             <span class="d-block d-flex justify-content-center" style="margin-top: 2rem;margin-bottom: 1rem;color: rgb(68, 40, 12);">
                                 <label class="col-3 text-start">Product Name</label>
-                                <input id="new-product-name" type="text" style="text-align: center;"/>
+                                <input id="name" name="name" type="text" style="text-align: center;"/>
                             </span>
                             <span class="d-block d-flex justify-content-center" style="margin-top: 1rem;margin-bottom: 1rem;color: rgb(68, 40, 12);">
                                 <label class="col-3 text-start">Product Value</label>
-                                <input id="new-product-value" type="text" style="text-align: center;"/>
+                                <input id="value" name="value" type="text" style="text-align: center;"/>
                             </span>
                             <div class="col-11 d-flex justify-content-between mx-auto" style="padding: 0.5rem;">
                                 <input type="submit" value="Save Product" style="padding: 0.5rem;color: rgb(68, 40, 12);"/>
+                                <span id="prod-response-success" class="d-none flex-column justify-content-center align-items-center" style="color: rgb(37, 249, 118);">
+                                    <i class="bi bi-check-circle-fill"></i>
+                                    <span>Operation Successful!</span>
+                                </span>
+                                <span id="prod-response-failure" class="d-none flex-column justify-content-center align-items-center" style="color: rgb(249, 11, 6);">
+                                    <i class="bi bi-exclamation-triangle-fill"></i>
+                                    <span>Operation Failed!</span>
+                                </span>
                                 <span id="cancel-product" class="btn d-block" style="width: 80px;background-color: rgba(188, 32, 48, 0.9);color: rgb(223, 220, 219);">Close</span>
                             </div>
                         </form>
@@ -235,21 +277,29 @@
                     <!-- create client form -->
                     <div id="create-client-form" class="d-none col-8 mx-auto" style="background-color: rgba(16, 12, 12, 0.45);height: 45vh;padding: 1rem;border-radius: 5px;">
                         <h4 style="font-size: 20px;">Register  New Client</h4>
-                        <form>
+                        <form th:method="POST">
                             <span class="d-block d-flex justify-content-center" style="margin-top: 2rem;margin-bottom: 1rem;color: rgb(68, 40, 12);">
                                 <label class="col-3 text-start">Enter Name</label>
-                                <input id="client-name" type="text" placeholder="client name" style="text-align: center;"/>
+                                <input id="name" name="name" type="text" placeholder="client name" style="text-align: center;"/>
                             </span>
                             <span class="d-block d-flex justify-content-center" style="margin-top: 1rem;margin-bottom: 1rem;color: rgb(68, 40, 12);">
                                 <label class="col-3 text-start">Enter Email</label>
-                                <input id="client-email" type="email" style="text-align: center;"/>
+                                <input id="email" name="email" type="email" style="text-align: center;"/>
                             </span>
                             <span class="d-block d-flex justify-content-center" style="margin-top: 1rem;margin-bottom: 1rem;color: rgb(68, 40, 12);">
                                 <label class="col-3 text-start">Enter Phone</label>
-                                <input id="client-phone" type="tel" style="text-align: center;"/>
+                                <input id="phone" name="phone" type="tel" style="text-align: center;"/>
                             </span>
                             <div class="col-11 d-flex justify-content-between mx-auto" style="padding: 0.5rem;">
                                 <input type="submit" value="Register" style="padding: 0.5rem;color: rgb(68, 40, 12);"/>
+                                <span id="client-response-success" class="d-none flex-column justify-content-center align-items-center" style="color: rgb(37, 249, 118);">
+                                    <i class="bi bi-check-circle-fill"></i>
+                                    <span>Operation Successful!</span>
+                                </span>
+                                <span id="client-response-failure" class="d-none flex-column justify-content-center align-items-center" style="color: rgb(249, 11, 6);">
+                                    <i class="bi bi-exclamation-triangle-fill"></i>
+                                    <span>Operation Failed!</span>
+                                </span>
                                 <span id="cancel-client" class="btn d-block" style="width: 80px;background-color: rgba(188, 32, 48, 0.9);color: rgb(223, 220, 219);">Close</span>
                             </div>
                         </form>
@@ -258,13 +308,22 @@
                     <div
                             id="bulk-mail-form"
                             class="d-none col-8 mx-auto flex-column align-items-center"
-                            style="background-color: rgba(16, 12, 12, 0.45);height: 40vh;padding-top: 1rem;border-radius: 5px;">
+                            style="background-color: rgba(16, 12, 12, 0.45);height: 40vh;padding-top: 1rem;border-radius: 5px;"
+                    >
                         <h4 class="text-start" style="width: 250px;font-size: 20px;">Mail All clients</h4>
                         <div class="" style="margin-top: 0.5rem;height: 60%;">
                             <textarea autofocus placeholder="Enter message here" style="width: 300px;height: 100%;resize: none;"></textarea>
                         </div>
                         <div class="col-11 d-flex justify-content-between mx-auto" style="margin-top: 0.5rem;">
                             <input type="submit" value="Send" style="width: 80px;margin: 0.5rem;">
+                            <span id="show-response-success" class="d-none flex-column justify-content-center align-items-center" style="color: rgb(37, 249, 118);">
+                                <i class="bi bi-check-circle-fill"></i>
+                                <span>Operation Successful!</span>
+                            </span>
+                            <span id="show-response-failure" class="d-none flex-column justify-content-center align-items-center" style="color: rgb(249, 11, 6);">
+                                <i class="bi bi-exclamation-triangle-fill"></i>
+                                <span>Operation Failed!</span>
+                            </span>
                             <span id="cancel-mail" class="btn d-block" style="width: 80px;background-color: rgba(188, 32, 48, 0.9);color: rgb(223, 220, 219);">close</span>
                         </div>
                     </div>
@@ -279,12 +338,29 @@
                         </div>
                         <div class="col-11 d-flex justify-content-between mx-auto" style="margin-top: 0.5rem;">
                             <input type="submit" value="Send" style="width: 80px;margin: 0.5rem;">
+                            <span id="show-response-success" class="d-none flex-column justify-content-center align-items-center" style="color: rgb(37, 249, 118);">
+                                <i class="bi bi-check-circle-fill"></i>
+                                <span>Operation Successful!</span>
+                            </span>
+                            <span id="show-response-failure" class="d-none flex-column justify-content-center align-items-center" style="color: rgb(249, 11, 6);">
+                                <i class="bi bi-exclamation-triangle-fill"></i>
+                                <span>Operation Failed!</span>
+                            </span>
                             <span id="cancel-sms" class="btn d-block" style="width: 80px;background-color: rgba(188, 32, 48, 0.9);color: rgb(223, 220, 219);">Close</span>
                         </div>
                     </div>
                 </div>
             </section>
+            <script th:if="${param.admin}">
+                document.getElementById("create-staff-link").addEventListener("click", () => {
+                    document.getElementById("create-staff-form").classList.replace("d-none", "d-block")
+                })
+                document.getElementById("cancel-staff").addEventListener("click", () => {
+                    document.getElementById("create-staff-form").classList.replace("d-block", "d-none")
+                })
+            </script>
             <script src="/js/adminHome.js"></script>
+            <script src="/js/apiOps.js"></script>
         </main>
         <footer>
             <div
