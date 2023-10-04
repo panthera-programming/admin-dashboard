@@ -5,8 +5,6 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-import java.util.Set;
-
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
@@ -21,6 +19,9 @@ public class ProductEntity {
     private String name;
     @Column(name = "product_value")
     private Long value;
-    @ManyToMany(mappedBy = "product")
+    /*@OneToMany(mappedBy = "product", fetch = FetchType.EAGER)
     private Set<ClientEntity> client;
+    public void setClient(ClientEntity client) {
+        this.client.add(client);
+    }*/
 }

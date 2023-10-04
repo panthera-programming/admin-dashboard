@@ -1,8 +1,6 @@
 package com.SpringBoot.admindashboard.Controller;
 
-import com.SpringBoot.admindashboard.Entities.ClientEntity;
 import com.SpringBoot.admindashboard.Entities.IdAndPassword;
-import com.SpringBoot.admindashboard.Entities.ProductEntity;
 import com.SpringBoot.admindashboard.Entities.StaffEntity;
 import com.SpringBoot.admindashboard.Service.ClientService;
 import com.SpringBoot.admindashboard.Service.EmailService;
@@ -13,8 +11,6 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.List;
-
 @Controller
 public class MainController {
     @Autowired
@@ -22,10 +18,9 @@ public class MainController {
     @Autowired
     private StaffService staffService;
     @Autowired
-    private EmailService emailService;
-    @Autowired
     private ClientService clientService;
-
+    @Autowired
+    private EmailService emailService;
     @GetMapping("/login")
     public String renderLoginPage()
     {
@@ -40,31 +35,6 @@ public class MainController {
     public String adminHomePage()
     {
         return ("redirect:/home?admin=true");
-    }
-
-    @GetMapping("/products")
-    public String allProductsEndpoint()
-    {
-        List<ProductEntity> products = productService.getAllProducts();
-
-        return ("");
-    }
-    @PostMapping("product/new")
-    public String createNewProduct(@RequestBody ProductEntity product)
-    {
-        String message = productService.createNewProduct(product);
-        if (message.equals("Product successfully saved"))
-        {
-            return ("");
-        }
-        return ("");
-    }
-    @DeleteMapping("product/delete/{id}")
-    public String deleteProduct(@RequestAttribute Long id)
-    {
-        String message = productService.deleteProduct(id);
-
-        return ("");
     }
 
     /**
@@ -115,19 +85,4 @@ public class MainController {
         return ("");
     }
 
-
-    /**
-     * CLIENT RELATED MAPPINGS
-     */
-
-    @PostMapping("/home/addClient")
-    public String createNewClient(@RequestBody ClientEntity client)
-    {
-        String message = clientService.saveClient(client);
-        if (message.equals("Client saved successfully"))
-        {
-            return ("");
-        }
-        return ("");
-    }
 }

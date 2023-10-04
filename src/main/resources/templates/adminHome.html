@@ -23,6 +23,14 @@
                 href="https://fonts.googleapis.com/css2?family=Material+Symbols+Rounded:opsz,wght,FILL,GRAD@24,400,1,0"
         />
         <style type="text/css">
+            .icon-container {
+                background-color: rgba(78, 76, 74, 0.4);
+                width: 28px;height: 28px; 
+                border-radius: 14px;
+                display: flex;
+                justify-content: center;
+                align-items: center;
+            }
         </style>
     </head>
     <body style="position: relative;padding: 0;">
@@ -59,49 +67,32 @@
                             <img src="/imgs/real-estate-logo.jpg" width="80px;" height="80px;" style="border-radius: 50%;"/>
                         </article>
                         <article style="position: relative;">
-                            <a id="toggleDrop1" style="font-size: 16px;color: rgb(223, 220, 219);">Products</a>
-                            <ul
-                                class="d-none drop-down-prod" 
-                                style="position: absolute;margin-left: -5rem;padding: 0.5rem;top: 2rem;border: 1px solid rgb(78, 76, 74);border-radius: 6px;list-style-type: none;"
-                            >
-                                <li>
-                                    <a>Add product</a>
-                                </li>
-                                <li>
-                                    <a>View products</a>
-                                </li>
-                            </ul>
+                            <a id="toggleDrop1" href="#section-div-properties" style="font-size: 16px;color: rgb(223, 220, 219);">Our Properties</a>
                         </article>
                         <article style="position: relative;">
                             <a id="toggleDrop2" style="font-size: 16px;color: rgb(223, 220, 219);">Clients</a>
                             <ul
-                                class="drop-down-client"
-                                style="position: absolute;margin-left: -5rem;padding: 0.5rem;top: 2rem;border: 1px solid rgb(78, 76, 74);border-radius: 6px;list-style-type: none;"
+                                class="d-none drop-down-client flex-column justify-content-between flex-wrap"
+                                style="position: absolute;margin-left: -15rem;padding: 0.5rem;top: 2rem;border: 1px solid rgb(78, 76, 74);border-radius: 6px;list-style-type: none;width: 250px;"
                             >
                                 <!-- load a list of products and place in tags -->
-                                <li>
-                                    <a>Product X</a>
-                                </li>
-                                <li>
-                                    <a>Product Y</a>
-                                </li>
                             </ul>
                         </article>
                     </div>
                 </div>
             </section>
             <section style="margin-top: 4rem;">
-                <div>
+                <div id="section-div-properties">
                     <div style="position: relative;" class="col-10 mx-auto d-flex justify-content-center flex-column">
-                        <h4 class="text-center col-5 mx-auto" style="margin-bottom: 4rem;">Available Products</h4>
-                        <span style="position: absolute;top: 20%;right: 15%;">
+                        <h4 class="text-center col-5 mx-auto" style="margin-bottom: 4rem;">Available Properties</h4>
+                        <span style="position: absolute;top: 5%;right: 15%;">
                             <a
                                     id="create-product-link"
                                     href="#create-product-form"
                                     class="btn"
                                     style="background-color: rgba(68, 40, 12, 0.95);color: rgba(255, 255, 255, 0.6);font-size: 15px;"
                             >
-                                New Product
+                                New Property
                             </a>
                         </span>
                         <div class="d-flex flex-column justify-content-center mx-auto">
@@ -115,27 +106,12 @@
                                         <th scope="col">Id</th>
                                         <th scope="col">Name</th>
                                         <th scope="col">Value</th>
-                                        <th scope="col">Edit</th>
-                                        <th scope="col">Clients</th>
+                                        <!--<th scope="col">Edit</th>
+                                        <th scope="col">Clients</th>-->
                                     </tr>
                                 </thead>
                                 <!-- iteratively create table rows for each product in list from backend -->
-                                <tbody class="table-group-divider">
-                                    <tr>
-                                        <td>1</td>
-                                        <td>Property Name</td>
-                                        <td>2M</td>
-                                        <td>
-                                            <span
-                                                    class="d-flex justify-content-center align-items-center"
-                                                    style="background-color: rgba(68, 40, 12, 0.4);width: 28px;height: 28px; border-radius: 14px;"
-                                            >
-                                                <a class="material-symbols-rounded">edit</a>
-                                            </span>
-                                        </td>
-                                        <th>12</th>
-                                    </tr>
-                                </tbody>
+                                <tbody class="table-group-divider prod-table"></tbody>
                             </table>
                         </div>
                     </div>
@@ -143,10 +119,10 @@
             </section>
             <section style="margin-top: 5rem; margin-bottom: 5rem;">
                 <div>
-                    <div class="col-10 d-flex flex-column justify-content-center mx-auto" style="position: relative;">
+                    <div id="selected-prod-clients" class="col-10 d-flex flex-column justify-content-center mx-auto" style="position: relative;">
                         <!-- product name from backend -->
                         <h4 id="product-name" class="text-center" style="margin-bottom: 4rem;">Product Name</h4>
-                        <div class="col-3 d-flex justify-content-between" style="position: absolute;top: 20%;right: 15%;">
+                        <div class="col-3 d-flex justify-content-between" style="position: absolute;top: 10%;right: 15%;">
                             <span  style="color: rgb(223, 220, 219);">
                                 <a id="bulk-mail-link" href="#bulk-mail-form" class="d-block btn" style="background-color: rgba(16, 12, 12, 0.45);font-size: 15px;">Bulk Mail</a>
                             </span>
@@ -154,9 +130,12 @@
                                 <a id="bulk-sms-link" href="#bulk-sms-form" class="btn"  style="background-color: rgba(16, 12, 12, 0.45);font-size: 15px;">Bulk SMS</a>
                             </span>
                         </div>
-                        <div style="position: absolute;top: 20%;left: 15%;">
-                            <span>
+                        <div class="col-2 d-flex justify-content-between" style="position: absolute;top: 10%;left: 15%;">
+                            <span class="d-flex justify-content-center align-items-center" style="width: fit-content;height: fit-content;padding: 4px;border-radius: 45px;background-color: rgba(68, 40, 12, 0.2);">
                                 <a id="create-client-link" href="#create-client-form" class="material-symbols-rounded" style="font-size: 40px;color: rgb(78, 76, 74);">person_add</a>
+                            </span>
+                            <span class="d-flex justify-content-center align-items-center" style="width: fit-content;height: fit-content;padding: 4px;border-radius: 45px;background-color: rgba(68, 40, 12, 0.2);">
+                                <a id="reload-prod-clients" class="material-symbols-rounded" style="font-size: 40px;color: rgb(37, 249, 118);cursor: pointer;">cached</a>
                             </span>
                         </div>
                         <div class="d-flex justify-content-center flex-column mx-auto">
@@ -172,25 +151,19 @@
                                     </tr>
                                 </thead>
                                 <!-- iteratively create table rows for each client in list -->
-                                <tbody>
-                                    <tr>
+                                <tbody class="clients-table-body">
+                                    <!--<tr>
                                         <td>1</td>
                                         <td>Client Name</td>
                                         <td id="client-mail">clientname@gmail.com</td>
                                         <td id="client-phone">0798765432</td>
                                         <td>
-                                            <span
-                                                    class="d-flex justify-content-center align-items-center"
-                                                    style="background-color: rgba(78, 76, 74, 0.4);width: 28px;height: 28px; border-radius: 14px;"
-                                            >
+                                            <span class="icon-container">
                                                 <a class="material-symbols-rounded">edit</a>
                                             </span>
                                         </td>
                                         <td class="d-flex justify-content-center align-items-center">
-                                            <span
-                                                    class="d-flex justify-content-center align-items-center"
-                                                    style="background-color: rgba(188, 32, 48, 0.4);width: 28px;height: 28px; border-radius: 14px;"
-                                            >
+                                            <span class="icon-container">
                                                 <a
                                                         class="material-symbols-rounded"
                                                         style="color: rgb(188, 32, 48);"
@@ -199,7 +172,7 @@
                                                 </a>
                                             </span>
                                         </td>
-                                    </tr>
+                                    </tr>-->
                                 </tbody>
                             </table>
                             <div>
@@ -288,7 +261,7 @@
                             </span>
                             <span class="d-block d-flex justify-content-center" style="margin-top: 1rem;margin-bottom: 1rem;color: rgb(68, 40, 12);">
                                 <label class="col-3 text-start">Enter Phone</label>
-                                <input id="phone" name="phone" type="tel" style="text-align: center;"/>
+                                <input id="phone" name="phone" type="text" placeholder="e.g +254..." style="text-align: center;"/>
                             </span>
                             <div class="col-11 d-flex justify-content-between mx-auto" style="padding: 0.5rem;">
                                 <input type="submit" value="Register" style="padding: 0.5rem;color: rgb(68, 40, 12);"/>
@@ -310,44 +283,48 @@
                             class="d-none col-8 mx-auto flex-column align-items-center"
                             style="background-color: rgba(16, 12, 12, 0.45);height: 40vh;padding-top: 1rem;border-radius: 5px;"
                     >
-                        <h4 class="text-start" style="width: 250px;font-size: 20px;">Mail All clients</h4>
-                        <div class="" style="margin-top: 0.5rem;height: 60%;">
-                            <textarea autofocus placeholder="Enter message here" style="width: 300px;height: 100%;resize: none;"></textarea>
-                        </div>
-                        <div class="col-11 d-flex justify-content-between mx-auto" style="margin-top: 0.5rem;">
-                            <input type="submit" value="Send" style="width: 80px;margin: 0.5rem;">
-                            <span id="show-response-success" class="d-none flex-column justify-content-center align-items-center" style="color: rgb(37, 249, 118);">
-                                <i class="bi bi-check-circle-fill"></i>
-                                <span>Operation Successful!</span>
-                            </span>
-                            <span id="show-response-failure" class="d-none flex-column justify-content-center align-items-center" style="color: rgb(249, 11, 6);">
-                                <i class="bi bi-exclamation-triangle-fill"></i>
-                                <span>Operation Failed!</span>
-                            </span>
-                            <span id="cancel-mail" class="btn d-block" style="width: 80px;background-color: rgba(188, 32, 48, 0.9);color: rgb(223, 220, 219);">close</span>
-                        </div>
+                        <h4 class="text-start" style="font-size: 20px;">Mail <span class="mail-reciever">All clients</span></h4>
+                        <form th:method="POST">
+                            <div class="" style="margin-top: 0.5rem;height: 60%;">
+                                <textarea id="mail-textarea" autofocus placeholder="Enter message here" style="width: 300px;height: 100%;resize: none;"></textarea>
+                            </div>
+                            <div class="col-11 d-flex justify-content-between mx-auto" style="margin-top: 0.5rem;">
+                                <input id="send-mail" type="submit" value="Send" style="width: 80px;margin: 0.5rem;">
+                                <span id="mail-response-success" class="d-none flex-column justify-content-center align-items-center" style="color: rgb(37, 249, 118);">
+                                    <i class="bi bi-check-circle-fill"></i>
+                                    <span>Operation Successful!</span>
+                                </span>
+                                <span id="mail-response-failure" class="d-none flex-column justify-content-center align-items-center" style="color: rgb(249, 11, 6);">
+                                    <i class="bi bi-exclamation-triangle-fill"></i>
+                                    <span>Operation Failed!</span>
+                                </span>
+                                <span id="cancel-mail" class="btn d-block" style="width: 80px;background-color: rgba(188, 32, 48, 0.9);color: rgb(223, 220, 219);">close</span>
+                            </div>
+                        </form>
                     </div>
                     <!--bulk sms-->
                     <div
                             id="bulk-sms-form"
                             class="d-none col-8 mx-auto flex-column align-items-center"
                             style="background-color: rgba(16, 12, 12, 0.45);height: 40vh;padding-top: 1rem;border-radius: 5px;">
-                        <h4 class="text-start" style="width: 250px;font-size: 20px;">SMS All clients</h4>
-                        <div class="" style="margin-top: 0.5rem;height: 60%;">
-                            <textarea autofocus placeholder="Enter message here" style="width: 300px;height: 100%;resize: none;"></textarea>
-                        </div>
-                        <div class="col-11 d-flex justify-content-between mx-auto" style="margin-top: 0.5rem;">
-                            <input type="submit" value="Send" style="width: 80px;margin: 0.5rem;">
-                            <span id="show-response-success" class="d-none flex-column justify-content-center align-items-center" style="color: rgb(37, 249, 118);">
-                                <i class="bi bi-check-circle-fill"></i>
-                                <span>Operation Successful!</span>
-                            </span>
-                            <span id="show-response-failure" class="d-none flex-column justify-content-center align-items-center" style="color: rgb(249, 11, 6);">
-                                <i class="bi bi-exclamation-triangle-fill"></i>
-                                <span>Operation Failed!</span>
-                            </span>
-                            <span id="cancel-sms" class="btn d-block" style="width: 80px;background-color: rgba(188, 32, 48, 0.9);color: rgb(223, 220, 219);">Close</span>
-                        </div>
+                        <h4 class="text-start" style="font-size: 20px;">SMS <span class="sms-reciever">All clients</span></h4>
+                        <form th:method="POST">
+                            <div class="" style="margin-top: 0.5rem;height: 60%;">
+                                <textarea id="sms-textarea" autofocus placeholder="Enter message here" style="width: 300px;height: 100%;resize: none;"></textarea>
+                            </div>
+                            <div class="col-11 d-flex justify-content-between mx-auto" style="margin-top: 0.5rem;">
+                                <input id="send-sms" type="submit" value="Send" style="width: 80px;margin: 0.5rem;">
+                                <span id="sms-response-success" class="d-none flex-column justify-content-center align-items-center" style="color: rgb(37, 249, 118);">
+                                    <i class="bi bi-check-circle-fill"></i>
+                                    <span>Operation Successful!</span>
+                                </span>
+                                <span id="sms-response-failure" class="d-none flex-column justify-content-center align-items-center" style="color: rgb(249, 11, 6);">
+                                    <i class="bi bi-exclamation-triangle-fill"></i>
+                                    <span>Operation Failed!</span>
+                                </span>
+                                <span id="cancel-sms" class="btn d-block" style="width: 80px;background-color: rgba(188, 32, 48, 0.9);color: rgb(223, 220, 219);">Close</span>
+                            </div>
+                        </form>
                     </div>
                 </div>
             </section>

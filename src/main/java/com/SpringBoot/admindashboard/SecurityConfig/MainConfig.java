@@ -37,15 +37,12 @@ public class MainConfig{
                 .authorizeHttpRequests(authorize -> authorize
                         .requestMatchers("/").permitAll()
                         .requestMatchers("/js/**","/imgs/**","/setPassword", "/api/**").permitAll()
-                        //.requestMatchers( "/api/**").hasAuthority("Admin")
-                        .requestMatchers("/adminHome/**","/register/firstAdmin").hasAuthority("Admin")
                         .anyRequest().authenticated()
                 )
                 .formLogin(
                         form -> form
                                 .loginPage("/login")
                                 .loginProcessingUrl("/login")
-                                //.defaultSuccessUrl("/adminHome")
                                 .successHandler(loginSuccessHandler)
                                 .permitAll()
                 )

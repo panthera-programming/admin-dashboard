@@ -4,18 +4,27 @@ import com.SpringBoot.admindashboard.Entities.ClientEntity;
 import com.SpringBoot.admindashboard.Entities.HttpResponse;
 import com.SpringBoot.admindashboard.Entities.ProductEntity;
 import com.SpringBoot.admindashboard.Entities.StaffEntity;
+import com.SpringBoot.admindashboard.Service.ClientService;
+import com.SpringBoot.admindashboard.Service.EmailService;
+import com.SpringBoot.admindashboard.Service.ProductService;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.net.URI;
+import java.util.List;
 import java.util.Map;
 
 @RestController
 public class Restful {
 
+    @Autowired
+    private ProductService productService;
+    @Autowired
+    private ClientService clientService;
+    @Autowired
+    private EmailService emailService;
     @PostMapping("/api/client/new")
     public ResponseEntity<HttpResponse> registerClient(@RequestBody ClientEntity client)
     {
@@ -23,10 +32,14 @@ public class Restful {
         System.out.println("\n\n*****\t"+client+"\t*****\n\n");
         if (client != null)
         {
-            msg = "Client registration SUCCESSFUL";
+            /*ProductEntity product = productService.getProductById(client.getProduct().getId());
+            client.setProduct(product);*/
+            msg = clientService.saveClient(client);
         }
         else
+        {
             msg = "Client registration UNSUCCESSFUL";
+        }
 
         return (ResponseEntity.created(URI.create("")).body(HttpResponse.builder()
                 .data(Map.of("Client", client))
@@ -37,7 +50,34 @@ public class Restful {
                 .build())
         );
     }
+    @GetMapping("/api/client/all")
+    public ResponseEntity<HttpResponse> allClientsPerProd(@RequestParam("prodId") Long id)
+    {
+        String msg = "Successfully Read clients";
+        List<ClientEntity> clientEntities = clientService.findAllPerProduct(id);
+        return (ResponseEntity.ok().body(HttpResponse.builder()
+                .data(Map.of("clients", clientEntities))
+                .message(msg)
+                .requestMethod("GET")
+                .status(HttpStatus.OK)
+                .statusCode(HttpStatus.OK.value())
+                .build())
+        );
+    }
 
+    @PostMapping("/api/client/mail/all")
+    public ResponseEntity<HttpResponse> sendBulkMail(@RequestParam("prodId") Long id, @RequestBody String message)
+    {
+        String msg = emailService.sendBulkClientMail("PROPERTY UPDATES", id, message);
+
+        return (ResponseEntity.created(URI.create("")).body(HttpResponse.builder()
+                .message(msg)
+                .requestMethod("POST")
+                .status(HttpStatus.CREATED)
+                .statusCode(HttpStatus.CREATED.value())
+                .build())
+        );
+    }
     @PostMapping("/api/product/new")
     public ResponseEntity<HttpResponse> addNewProduct(@RequestBody ProductEntity product)
     {
@@ -45,7 +85,7 @@ public class Restful {
         System.out.println("\n\n*****\t"+product+"\t*****\n\n");
         if (product != null)
         {
-            msg = "Product creation SUCCESSFUL";
+            msg = productService.createNewProduct(product);
         }
         else
             msg = "Product creation UNSUCCESSFUL";
@@ -56,6 +96,20 @@ public class Restful {
                 .requestMethod("POST")
                 .status(HttpStatus.CREATED)
                 .statusCode(HttpStatus.CREATED.value())
+                .build())
+        );
+    }
+    @GetMapping("/api/product/all")
+    public ResponseEntity<HttpResponse> allProducts()
+    {
+        List<ProductEntity> productsList = productService.getAllProducts();
+        //System.out.println("\n\n**********\t"+productsList.get(0).getClient()+"\t**********\n\n");
+        return (ResponseEntity.ok().body(HttpResponse.builder()
+                .data(Map.of("products", productsList))
+                .message("All products retrieval successful")
+                .requestMethod("GET")
+                .status(HttpStatus.OK)
+                .statusCode(HttpStatus.OK.value())
                 .build())
         );
     }

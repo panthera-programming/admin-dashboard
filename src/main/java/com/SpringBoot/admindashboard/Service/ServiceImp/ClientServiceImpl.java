@@ -6,6 +6,7 @@ import com.SpringBoot.admindashboard.Service.ClientService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
 import java.util.Map;
 
 @Service
@@ -23,6 +24,15 @@ public class ClientServiceImpl implements ClientService {
     public ClientEntity findClientByEmail(String email)
     {
         return (repository.findByEmail(email));
+    }
+    @Override
+    public List<ClientEntity> findAllClients()
+    {
+        return (repository.findAll());
+    }
+    @Override
+    public List<ClientEntity> findAllPerProduct(Long prodId){
+        return (repository.findAllByProduct(prodId));
     }
     @Override
     public void deleteClient(Long id) {

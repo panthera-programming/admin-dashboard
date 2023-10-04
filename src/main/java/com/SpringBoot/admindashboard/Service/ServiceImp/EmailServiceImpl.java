@@ -1,7 +1,6 @@
 package com.SpringBoot.admindashboard.Service.ServiceImp;
 
 import com.SpringBoot.admindashboard.Entities.ClientEntity;
-import com.SpringBoot.admindashboard.Entities.ProductEntity;
 import com.SpringBoot.admindashboard.Repository.ClientRepository;
 import com.SpringBoot.admindashboard.Service.EmailService;
 import jakarta.mail.internet.MimeMessage;
@@ -49,7 +48,14 @@ public class EmailServiceImpl implements EmailService {
     }
 
     @Override
-    public void sendBulkClientMail(String subject, Long product_id, ProductEntity product) {
-        List<ClientEntity> clients = clientRepository.findByProduct(product);
+    public String sendBulkClientMail(String subject, Long product_id, String msg) {
+        List<ClientEntity> clients = clientRepository.findAllByProduct(product_id);
+
+        for (ClientEntity client : clients)
+        {
+            sendClientMail(subject,msg,client);
+        }
+
+        return ("Mail Successfully sent to all clients");
     }
 }
