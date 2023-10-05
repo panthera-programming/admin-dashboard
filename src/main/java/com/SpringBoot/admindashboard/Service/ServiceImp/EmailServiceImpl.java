@@ -35,9 +35,11 @@ public class EmailServiceImpl implements EmailService {
             helper.setFrom(from);
             helper.setSubject(subject);
 
+            System.out.println("\n\n**********\t"+client+"\t**********\n**********\t"+message+"\t**********\n\n");
+
             Context ctx = new Context();
+            ctx.setVariables(Map.of("client", client.getName(), "message", message));
             String mailText = templateEngine.process("clientMailTemplate.html", ctx);
-            ctx.setVariables(Map.of("clientname", client.getName(), "message", message));
 
             helper.setText(mailText, true);
             mailSender.send(mimeMessage);

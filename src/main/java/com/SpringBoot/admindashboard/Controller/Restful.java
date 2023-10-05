@@ -1,9 +1,6 @@
 package com.SpringBoot.admindashboard.Controller;
 
-import com.SpringBoot.admindashboard.Entities.ClientEntity;
-import com.SpringBoot.admindashboard.Entities.HttpResponse;
-import com.SpringBoot.admindashboard.Entities.ProductEntity;
-import com.SpringBoot.admindashboard.Entities.StaffEntity;
+import com.SpringBoot.admindashboard.Entities.*;
 import com.SpringBoot.admindashboard.Service.ClientService;
 import com.SpringBoot.admindashboard.Service.EmailService;
 import com.SpringBoot.admindashboard.Service.ProductService;
@@ -66,10 +63,9 @@ public class Restful {
     }
 
     @PostMapping("/api/client/mail/all")
-    public ResponseEntity<HttpResponse> sendBulkMail(@RequestParam("prodId") Long id, @RequestBody String message)
+    public ResponseEntity<HttpResponse> sendBulkMail(@RequestParam("prodId") Long id, @RequestBody Message message)
     {
-        String msg = emailService.sendBulkClientMail("PROPERTY UPDATES", id, message);
-
+        String msg = emailService.sendBulkClientMail("PROPERTY UPDATES", id, message.getMessage());
         return (ResponseEntity.created(URI.create("")).body(HttpResponse.builder()
                 .message(msg)
                 .requestMethod("POST")

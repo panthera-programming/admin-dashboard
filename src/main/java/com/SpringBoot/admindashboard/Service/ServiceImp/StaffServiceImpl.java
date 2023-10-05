@@ -61,7 +61,7 @@ public class StaffServiceImpl implements StaffService {
            Context ctx = new Context();
            String urlLink = String.format("%s/setPassword?id=%d", mailHost, staff.getId());
            System.out.printf("\n\n**********\t%s\t**********\n\n", urlLink);
-           //String link = mailHost + "/setPassword?id=" + staff.getId();
+
            ctx.setVariables(Map.of("passwordLink",urlLink, "staffname", staff.getName()));
            String mailText = templateEngine.process("staffMailTemplate.html", ctx);
            helper.setText(mailText, true);
@@ -75,7 +75,6 @@ public class StaffServiceImpl implements StaffService {
     @Override
     public void saveStaffPassword(StaffEntity staff)
     {
-        System.out.printf("\n\n##########\t%s\t##########\n\n", staff.getPassword());
         String password = passwordEncoder.encode(staff.getPassword());
         staff.setPassword(password);
         staffRepository.save(staff);
