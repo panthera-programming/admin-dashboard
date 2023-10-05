@@ -3,9 +3,11 @@ package com.SpringBoot.admindashboard.Service.ServiceImp;
 import com.SpringBoot.admindashboard.Entities.ClientEntity;
 import com.SpringBoot.admindashboard.Repository.ClientRepository;
 import com.SpringBoot.admindashboard.Service.ClientService;
+import com.SpringBoot.admindashboard.Service.MySmsService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.io.IOException;
 import java.util.List;
 import java.util.Map;
 
@@ -15,6 +17,8 @@ public class ClientServiceImpl implements ClientService {
     private ClientRepository repository;
     @Autowired
     private EmailServiceImpl emailService;
+    @Autowired
+    private MySmsService mySmsService;
     @Override
     public String saveClient(ClientEntity client) {
         repository.save(client);
@@ -49,6 +53,18 @@ public class ClientServiceImpl implements ClientService {
     }
 
     @Override
-    public void messageClient() {
+    public String smsClient(String message, Long id) throws Exception
+    {
+        List<ClientEntity> clients = repository.findAllByProduct(id);
+        String msg = "";
+        String[] contacts = clients.stream()
+                .map(ClientEntity::getPhone)
+                .toArray(String[]::new);
+        try {
+            msg = mySmsService.sendSms(message,contacts);
+        } catch (IOException ex){
+            ex.printStackTrace();
+        }
+        return (msg);
     }
 }

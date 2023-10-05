@@ -44,6 +44,11 @@
 			<artifactId>spring-boot-starter-security</artifactId>
 		</dependency>
 		<dependency>
+			<groupId>com.github.AfricasTalkingLtd.africastalking-java</groupId>
+			<artifactId>core</artifactId>
+			<version>3.4.9</version>
+		</dependency>
+		<dependency>
 			<groupId>org.projectlombok</groupId>
 			<artifactId>lombok</artifactId>
 			<optional>true</optional>

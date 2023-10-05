@@ -12,5 +12,5 @@ public interface ClientService {
     List<ClientEntity> findAllPerProduct(Long prodId);
     void deleteClient(Long id);
     void emailClient(Map<String, ?> mailParts);
-    void messageClient();
+    String smsClient(String message, Long id) throws Exception;
 }

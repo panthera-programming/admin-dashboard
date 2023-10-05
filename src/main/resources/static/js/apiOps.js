@@ -223,7 +223,7 @@ async function prodClicked(num)
             field4.appendChild(field4A)
             tableRaw.appendChild(field4)
 
-            field5 = document.createElement("td")
+            /*field5 = document.createElement("td")
             spanField5 = document.createElement("span")
             spanField5.setAttribute("class", "icon-container")
             spanField5A = document.createElement("a")
@@ -231,7 +231,7 @@ async function prodClicked(num)
             spanField5A.innerText = "edit"
             spanField5.appendChild(spanField5A)
             field5.appendChild(spanField5)
-            tableRaw.appendChild(field5)
+            tableRaw.appendChild(field5)*/
 
             field6 = document.createElement("td")
             spanField6 = document.createElement("span")
@@ -302,8 +302,8 @@ function sendMailSms(msgType,container)
     
     if (msgType === "sms")
     {
-        //const link = "http://localhost:8080/api/client/sms"
-        sendSms(container)
+        const link = `http://localhost:8080/api/client/sms/all?prodId=${prodId}`
+        sendSms(container,link)
     }
     else
     {
@@ -345,6 +345,7 @@ function sendSms(formContainer,endpointLink){
         form.preventDefault()
         const msgJson = {}
         msgJson["message"] = document.getElementById("sms-textarea").value
+        postData(endpointLink,msgJson,"sms-response-success","sms-response-failure")
         console.log(msgJson) 
     })
 }

@@ -3,12 +3,14 @@ package com.SpringBoot.admindashboard.Controller;
 import com.SpringBoot.admindashboard.Entities.*;
 import com.SpringBoot.admindashboard.Service.ClientService;
 import com.SpringBoot.admindashboard.Service.EmailService;
+import com.SpringBoot.admindashboard.Service.MySmsService;
 import com.SpringBoot.admindashboard.Service.ProductService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.io.IOException;
 import java.net.URI;
 import java.util.List;
 import java.util.Map;
@@ -22,6 +24,8 @@ public class Restful {
     private ClientService clientService;
     @Autowired
     private EmailService emailService;
+    @Autowired
+    private MySmsService mySmsService;
     @PostMapping("/api/client/new")
     public ResponseEntity<HttpResponse> registerClient(@RequestBody ClientEntity client)
     {
@@ -66,6 +70,25 @@ public class Restful {
     public ResponseEntity<HttpResponse> sendBulkMail(@RequestParam("prodId") Long id, @RequestBody Message message)
     {
         String msg = emailService.sendBulkClientMail("PROPERTY UPDATES", id, message.getMessage());
+        return (ResponseEntity.created(URI.create("")).body(HttpResponse.builder()
+                .message(msg)
+                .requestMethod("POST")
+                .status(HttpStatus.CREATED)
+                .statusCode(HttpStatus.CREATED.value())
+                .build())
+        );
+    }
+    @PostMapping("/api/client/sms/all")
+    public ResponseEntity<HttpResponse> sendBulkSms(@RequestParam("prodId") Long id, @RequestBody Message message) throws Exception
+    {
+        String msg = "";
+        try
+        {
+            msg = clientService.smsClient(message.getMessage(), id);
+        }catch (IOException ex)
+        {
+            ex.printStackTrace();
+        }
         return (ResponseEntity.created(URI.create("")).body(HttpResponse.builder()
                 .message(msg)
                 .requestMethod("POST")
